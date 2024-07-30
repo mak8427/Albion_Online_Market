@@ -1,0 +1,4 @@
+black==24.4.2
+click==8.1.7
+pathspec==0.12.1
+polars==1.3.0

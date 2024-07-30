@@ -1,4 +1,4 @@
-import  requests
+import requests
 import polars as pl
 
 
@@ -22,11 +22,9 @@ for city in cities:
     if NOT_LOADED:
         city_dict[city] = df.filter(pl.col("city") == city)
     if city_dict[city]["sell_price_min_date"][-1]!= df.filter(pl.col("city")==city)["sell_price_min_date"][-1]:
+        # if the last timestamp is different
         city_dict[city] = city_dict[city].merge_sorted(df.filter(pl.col("city") == city),key="item_id")
-    else: print (f"{city} is up to date", city_dict[city]["sell_price_min_date"][-1], df.filter(pl.col("city")==city)["sell_price_min_date"][-1])
+    else:
+        print(f"{city} is up to date", city_dict[city]["sell_price_min_date"][-1], df.filter(pl.col("city")==city)["sell_price_min_date"][-1])
 
     city_dict[city].write_csv(f"{city}.csv")
-
-
-
-
