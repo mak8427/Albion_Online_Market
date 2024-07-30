@@ -41,13 +41,17 @@ data = response.json()
 df = pl.DataFrame(data)
 
 
+def update_check(city_dict, df):
+    return (
+        city_dict[city]["sell_price_min_date"][-1]
+        != df.filter(pl.col("city") == city)["sell_price_min_date"][-1]
+    )
+
+
 for city in cities:
     if NOT_LOADED:
         city_dict[city] = df.filter(pl.col("city") == city)
-    if (
-        city_dict[city]["sell_price_min_date"][-1]
-        != df.filter(pl.col("city") == city)["sell_price_min_date"][-1]
-    ):
+    if update_check(city_dict, df):
         # if the last timestamp is different
         city_dict[city] = city_dict[city].merge_sorted(
             df.filter(pl.col("city") == city), key="item_id"
