@@ -3,4 +3,4 @@
 set -e
 
 python3 Main.py
-sleep 60 * 5 # 5 minutes
+sleep 300 # 5 minutes
