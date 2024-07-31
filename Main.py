@@ -64,3 +64,4 @@ for city in cities:
         )
 
     city_dict[city].write_csv(f"{city}.csv")
+    print("")
